@@ -1,0 +1,16 @@
+[Unit]
+Description=Hadoop Jmx Exporter
+After=network-online.target
+
+[Service]
+Type=simple
+User=nodeusr
+Group=nodeusr
+ExecStart=/usr/local/bin/hadoop_jmx_exporter
+KillMode=process
+RemainAfterExit=no
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

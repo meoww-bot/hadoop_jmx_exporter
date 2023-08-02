@@ -1,0 +1,19 @@
+  - job_name: 'hadoop_jmx_exporter'
+    scrape_interval: 30s
+    metrics_path: /scrape
+    params:
+      ktpath:  
+      - /etc/xxxxx.keytab
+      principal:  
+      - xxxxx@EXAMPLE.COM
+    static_configs:
+      - targets:
+        - http://yarn-rm.example.com:8088/jmx
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        regex: "http://([^/:]+):\\d+/jmx"
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9070 # hadoop_jmx_exporter 服务所在的机器和端口
